@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import Api from '../api'
 
-class MessageList extends Component {
+class MessageList extends React.PureComponent {
   constructor(...args) {
     super(...args)
     this.state = {
@@ -33,29 +33,26 @@ class MessageList extends Component {
     })
   }
 
-  renderButton() {
+  handleClick = () => {
     const isApiStarted = this.api.isStarted()
-    return (
-      <Button
-        variant="contained"
-        onClick={() => {
-          if (isApiStarted) {
-            this.api.stop()
-          } else {
-            this.api.start()
-          }
-          this.forceUpdate()
-        }}
-      >
-        {isApiStarted ? 'Stop Messages' : 'Start Messages'}
-      </Button>
-    )
+    if (isApiStarted) {
+      this.api.stop()
+    } else {
+      this.api.start()
+    }
+    this.forceUpdate()
   }
 
   render() {
+    const isApiStarted = this.api.isStarted()
     return (
       <div>
-        {this.renderButton()}
+        <Button
+          variant="contained"
+          onClick={this.handleClick}
+        >
+          {isApiStarted ? 'Stop Messages' : 'Start Messages'}
+        </Button>
       </div>
     )
   }

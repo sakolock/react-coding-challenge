@@ -14,7 +14,7 @@ The 3 priorities that we provide you are:
 
 1. Messages should be rendered in a table-like structure. The newest messages should appear at the top of their respective columns.
 
-Note: The example design below.
+1a. Use the mockup below. It contains some inconsistencies. Please ensure that your app represents a good faith effort at matching the mockup within reason. We welcome follow up questions if you have them.
 
 ![Example Design](https://github.com/helpdotcom/react-coding-challenge/raw/master/grid.png)
 
@@ -31,6 +31,6 @@ Note: The example design below.
 6. A user should be able to start and stop incoming messages. By default the messages should be running and displaying on the grid. The start/stop button should update depending on the state of the feed.
 7. A user should see a count of specific messages in each column
 8. Use material-ui components and JSS styles.
-9. Test your application to the degree that you feel comfortable with. No specific testing frameworks are required.
+9. Test your application to the degree that you feel comfortable with. No specific testing frameworks are required. We have left a failing test for a breadcrumb.
 
 *** Applicants are provided this challenge with no expectation on deadline. Please take the time you need to complete the challenge to the best of your ability. ***
