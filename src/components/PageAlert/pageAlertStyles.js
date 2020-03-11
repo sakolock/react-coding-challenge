@@ -8,14 +8,11 @@ export const usePageAlertStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         width: '30rem',
-        color: theme.palette.text.primary
+        color: theme.palette.text.primary,
+        boxShadow: `0 3px 5px ${theme.palette.text.disabled}`
     },
     button: {
         fontSize: '1.4rem',
         padding: theme.spacing(0.5)
-            // '&:hover': {
-            //     cursor: 'pointer',
-            //     backgroundColor: theme.palette.error.dark
-            // }
     }
 }));
