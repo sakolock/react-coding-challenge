@@ -22,11 +22,15 @@ const PageAlert = props => {
     <>
       {createPortal(
         <Alert
-          zIndex="tooltip"
+          zIndex="modal"
           className={classes.root}
           severity={MESSAGE_PRIORITY_MAPPING[ERROR_PRIORITY]}
           variant="filled"
-          icon={<CloseOutlinedIcon className={classes.button} onClick={props.handleCloseClick} />}
+          icon={
+            <IconButton className={classes.button} onClick={props.handleCloseClick}>
+              <CloseOutlinedIcon />
+            </IconButton>
+          }
         >
           <Typography>{props.message}</Typography>
         </Alert>,

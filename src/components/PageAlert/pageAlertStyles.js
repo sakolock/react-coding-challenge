@@ -12,9 +12,10 @@ export const usePageAlertStyles = makeStyles(theme => ({
     },
     button: {
         fontSize: '1.4rem',
-        '&:hover': {
-            cursor: 'pointer',
-            backgroundColor: theme.palette.error.dark
-        }
+        padding: theme.spacing(0.5)
+            // '&:hover': {
+            //     cursor: 'pointer',
+            //     backgroundColor: theme.palette.error.dark
+            // }
     }
 }));

@@ -16,7 +16,7 @@ const Message = props => {
   const { message, priority, deleteMessage } = props;
 
   return (
-    <Card className={`${classes.message} ${classes[MESSAGE_PRIORITY_MAPPING[priority]]}`}>
+    <Card raised={true} className={`${classes.message} ${classes[MESSAGE_PRIORITY_MAPPING[priority]]}`}>
       <CardContent>
         <Typography component="p" variant="subtitle2">
           {message}
