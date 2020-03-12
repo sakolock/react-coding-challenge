@@ -3,21 +3,26 @@ import { Card, CardContent, CardActions, Typography, Button } from '@material-ui
 import { MESSAGE_PRIORITY_MAPPING } from '../Common/Constants';
 import { useMessageStyles } from './messageStyles';
 
-// export interface MessageProps {
-//   id: string;
-//   message: string;
-//   priority: 1 | 2 | 3;
-//   // deleteMessage: any;
-//   deleteMessage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, messagesKey: string, id: string) => void;
-// }
+/**
+  props = {
+    id: string;
+    message: string;
+    priority: 1 | 2 | 3;
+    deleteMessage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, messagesKey: string, id: string) => void;
+  }
+ */
 
 const Message = props => {
   const classes = useMessageStyles();
-  const { message, priority, deleteMessage } = props;
+  const { id, message, priority, deleteMessage } = props;
 
   return (
-    <Card raised={true} className={`${classes.message} ${classes[MESSAGE_PRIORITY_MAPPING[priority]]}`}>
-      <CardContent>
+    <Card
+      data-testid="message"
+      raised={true}
+      className={`${classes.message} ${classes[MESSAGE_PRIORITY_MAPPING[priority]]}`}
+    >
+      <CardContent data-testid={`${id}`}>
         <Typography component="p" variant="subtitle2">
           {message}
         </Typography>
@@ -28,7 +33,6 @@ const Message = props => {
         </Button>
       </CardActions>
     </Card>
-    // </Grid>
   );
 };
 

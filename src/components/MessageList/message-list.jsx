@@ -23,7 +23,6 @@ const MessageList = () => {
 
   useEffect(() => {
     const newApi = new Api({
-      // @ts-ignore TODO
       messageCallback: (message: MessageProps) => {
         messageCallback(message);
       }
@@ -32,8 +31,7 @@ const MessageList = () => {
     setApi({ api: newApi, isRunning: true });
 
     return () => {
-      // @ts-ignore TODO
-      if (apiInfo && apiInfo.api) {
+      if (apiInfo && apiInfo.api && apiInfo.api.stop) {
         apiInfo.api.stop();
         setApi({
           api: {},
@@ -50,7 +48,7 @@ const MessageList = () => {
   }, [alert]);
 
   const messageCallback = (message: MessageProps) => {
-    if (message.priority === Number(ERROR_PRIORITY)) {
+    if (message.priority === ERROR_PRIORITY) {
       showAlert(message);
     }
 
@@ -110,7 +108,7 @@ const MessageList = () => {
   };
 
   return (
-    <Grid container component="section" justify="center">
+    <Grid data-testid="message-list" container component="section" justify="center">
       <Grid
         container
         className={classes.buttonContainer}
@@ -132,6 +130,7 @@ const MessageList = () => {
         </Grid>
         <Grid item>
           <Button
+            data-testid="clear-all"
             size="small"
             className={classes.button}
             variant="contained"
