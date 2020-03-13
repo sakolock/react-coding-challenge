@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core/index';
-import { APP_TITLE } from '../Common/Constants';
+import { APP_TITLE } from '../../Constants';
 import { MessageList } from '../MessageList/message-list';
 import { usePageStyles } from './pageStyles.js';
 

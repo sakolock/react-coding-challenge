@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import Page from './page';
-import { APP_TITLE } from '../Common/Constants';
+import { APP_TITLE } from '../../Constants';
 
 describe('Page', () => {
   afterEach(cleanup);

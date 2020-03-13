@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardActions, Typography, Button } from '@material-ui/core/index';
-import { MESSAGE_PRIORITY_MAPPING } from '../Common/Constants';
+import { MESSAGE_PRIORITY_MAPPING } from '../../Constants';
 import { useMessageStyles } from './messageStyles';
 
 /**
@@ -8,18 +8,18 @@ import { useMessageStyles } from './messageStyles';
     id: string;
     message: string;
     priority: 1 | 2 | 3;
-    deleteMessage: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, messagesKey: string, id: string) => void;
+    handleClearClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, messagesKey: string, id: string) => void;
   }
  */
 
 const Message = props => {
   const classes = useMessageStyles();
-  const { id, message, priority, deleteMessage } = props;
+  const { id, message, priority, handleClearClick } = props;
 
   return (
     <Card
-      data-testid="message"
-      raised={true}
+      data-testid={`message-${MESSAGE_PRIORITY_MAPPING[priority]}`}
+      elevation={5}
       className={`${classes.message} ${classes[MESSAGE_PRIORITY_MAPPING[priority]]}`}
     >
       <CardContent data-testid={`${id}`}>
@@ -28,7 +28,7 @@ const Message = props => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button className={classes.button} onClick={deleteMessage}>
+        <Button className={classes.button} onClick={handleClearClick}>
           Clear
         </Button>
       </CardActions>

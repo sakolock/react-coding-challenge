@@ -9,10 +9,11 @@ export const usePageAlertStyles = makeStyles(theme => ({
         alignItems: 'center',
         width: '30rem',
         color: theme.palette.text.primary,
-        boxShadow: `0 3px 5px ${theme.palette.text.disabled}`
+        boxShadow: `0 3px 5px ${theme.palette.text.disabled}`,
+        zIndex: 1
     },
     button: {
-        fontSize: '1.4rem',
-        padding: theme.spacing(0.5)
+        fontSize: '1rem',
+        padding: 0
     }
 }));

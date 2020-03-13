@@ -3,14 +3,24 @@ import { Grid, Typography, Button } from '@material-ui/core/index';
 import Api from '../../api';
 import { Message } from '../Message/message';
 import { PageAlert } from '../PageAlert/page-alert';
-import { ERROR_PRIORITY, MESSAGE_PRIORITY_MAPPING, ALERT_DURATION } from '../Common/Constants';
+import { ERROR_PRIORITY, MESSAGE_PRIORITY_MAPPING, ALERT_DURATION, TEST_IDS } from '../../Constants';
 import { useMessageListStyles } from './messageListStyles';
 
-const defaultMessagesObject = { 1: {}, 2: {}, 3: {} };
+/**
+props = {
+  messages: {
+    1: Array<{id: string, message: string, priority: number}>
+    2: Array<{id: string, message: string, priority: number}>
+    3: Array<{id: string, message: string, priority: number}>
+  }
+}
+ */
 
-const MessageList = () => {
+const defaultMessages = { 1: [], 2: [], 3: [] };
+
+const MessageList = props => {
   const classes = useMessageListStyles();
-  const [messages, setMessages] = useState({ ...defaultMessagesObject });
+  const [messages, setMessages] = useState(props.messages ? { ...props.messages } : { ...defaultMessages });
   const [apiInfo, setApi] = useState({
     api: {},
     isRunning: false
@@ -53,11 +63,11 @@ const MessageList = () => {
     }
 
     setMessages(messages => {
-      const currentMessagesForGroup = messages[message.priority] || {};
+      const currentMessagesForGroup = messages[message.priority] || [];
 
       return {
         ...messages,
-        [message.priority]: { ...currentMessagesForGroup, [message.id]: message }
+        [message.priority]: [...currentMessagesForGroup, message]
       };
     });
   };
@@ -76,7 +86,7 @@ const MessageList = () => {
   };
 
   const handleClearClick = () => {
-    setMessages({ ...defaultMessagesObject });
+    setMessages({ ...defaultMessages });
   };
 
   const closeAlert = () => {
@@ -97,18 +107,17 @@ const MessageList = () => {
 
   const deleteMessage = (priority, id) => {
     setMessages(messages => {
-      const updatedMessages = { ...messages[priority] };
-      delete updatedMessages[id];
+      const updatedMessages = messages[priority].filter(message => message.id !== id);
 
       return {
         ...messages,
-        [priority]: { ...updatedMessages }
+        [priority]: [...updatedMessages]
       };
     });
   };
 
   return (
-    <Grid data-testid="message-list" container component="section" justify="center">
+    <Grid data-testid={TEST_IDS.messageList.component} container component="section" justify="center">
       <Grid
         container
         className={classes.buttonContainer}
@@ -130,7 +139,7 @@ const MessageList = () => {
         </Grid>
         <Grid item>
           <Button
-            data-testid="clear-all"
+            data-testid={TEST_IDS.messageList.clearAllButton}
             size="small"
             className={classes.button}
             variant="contained"
@@ -144,22 +153,23 @@ const MessageList = () => {
       {alert.showing && <PageAlert {...alert.message} handleCloseClick={closeAlert} />}
       <Grid container item component="section" justify="center" alignItems="flex-start" xs={12} md={9} spacing={1}>
         {Object.keys(messages).map(messagesKey => {
-          const messagesObj = messages[messagesKey];
+          const messagesForPriorityLevel = messages[messagesKey];
+          const sectionType = MESSAGE_PRIORITY_MAPPING[messagesKey];
 
           return (
             <Grid key={messagesKey} item container component="section" direction="column" xs={4} spacing={1}>
               <Grid item component="header">
                 <Typography component="h2" className={classes.heading}>
-                  {MESSAGE_PRIORITY_MAPPING[messagesKey]} Type {messagesKey}
+                  {sectionType} Type {messagesKey}
                 </Typography>
-                <Typography component="p" variant="subtitle2">
-                  Count {Object.keys(messagesObj).length}
+                <Typography data-testid={`${sectionType}-count`} component="p" variant="subtitle2">
+                  Count {messagesForPriorityLevel.length}
                 </Typography>
               </Grid>
               <Grid component="section" container item alignItems="stretch" direction="column-reverse" spacing={1}>
-                {Object.entries(messagesObj).map(([id, message]) => (
-                  <Grid key={id} item xs="auto">
-                    <Message {...message} deleteMessage={() => deleteMessage(messagesKey, id)} />
+                {messagesForPriorityLevel.map(message => (
+                  <Grid key={message.id} item xs="auto">
+                    <Message {...message} handleClearClick={() => deleteMessage(messagesKey, message.id)} />
                   </Grid>
                 ))}
               </Grid>
